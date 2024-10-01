@@ -16,14 +16,23 @@ export class UsersRepository{
 
         const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
 
-        const newUser = new User();
+        try {
+            const newUser = new User();
 
-        newUser.firstName = createUserDto.firstName;
-        newUser.lastName = createUserDto.lastName;
-        newUser.email = createUserDto.email;
-        newUser.password = hashedPassword;
+            newUser.firstName = createUserDto.firstName;
+            newUser.lastName = createUserDto.lastName;
+            newUser.email = createUserDto.email;
+            newUser.password = hashedPassword;
 
-        return await this.usersRepository.save(newUser)
+        await this.usersRepository.save(newUser)
+        return newUser;
+        }
+        catch(err){
+            if(err.errno == 1062){
+                return 'This email is already used'
+            }
+        }
+        
     }
     findAll(){
         return 'All users found'

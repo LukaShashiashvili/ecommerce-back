@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { ProductsModule } from './products/products.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
     database: 'ecommerce',
     autoLoadEntities: true,
     synchronize: true
-  }) , UsersModule, AuthModule],
+  }) , UsersModule, AuthModule, ProductsModule],
   controllers: [AppController],
   providers: [AppService],
 })

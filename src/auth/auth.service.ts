@@ -19,14 +19,15 @@ export class AuthService {
             user.password
         );
 
+        if(user.numberOfAttempts >= 3){
+            throw new UnauthorizedException('Your account is blocked');
+        }
         if(!isPassCorrect){
             await this.usersRepository.incrementAttemptsById(user.id)
             throw new UnauthorizedException('Access denied');
         }
 
-        if(user.numberOfAttempts >= 3){
-            throw new UnauthorizedException('Your account is blocked');
-        }
+        
         
         await this.usersRepository.resetAttemptsById(user.id);
         return user;
