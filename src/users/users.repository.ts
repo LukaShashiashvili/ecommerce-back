@@ -29,11 +29,12 @@ export class UsersRepository{
         return 'All users found'
     }
     findByEmail(email: string){
-        return this.usersRepository.findOne({where: {email: email}})
+       return this.usersRepository.findOne({
+        where: {email: email},})
     }
     findByEmailAndReturnPass(email: string){
-        return this.usersRepository.findOne({where: {email: email},
-                                            select: {email: true, password: true, numberOfAttempts: true,},
+       return this.usersRepository.findOne({where: {email: email},
+                                            select: {email: true, password: true,numberOfAttempts: true},
                                             })
     }
 

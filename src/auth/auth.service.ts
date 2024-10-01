@@ -8,15 +8,15 @@ export class AuthService {
     constructor(private readonly usersRepository: UsersRepository){};
 
     async loginUser(data: LoginUserDto){
-        const user = await this.usersRepository.findByEmail(data.email);
-
+        const user = await this.usersRepository.findByEmailAndReturnPass(data.email);
+        
         if(!user){
             throw new UnauthorizedException('Access denied');
         }
         
         const isPassCorrect = await bcrypt.compare(
-            data.password, 
-            user.password,
+            data.password,
+            user.password
         );
 
         if(!isPassCorrect){
@@ -24,7 +24,7 @@ export class AuthService {
             throw new UnauthorizedException('Access denied');
         }
 
-        if(user.numberOfAttempts > 3){
+        if(user.numberOfAttempts >= 3){
             throw new UnauthorizedException('Your account is blocked');
         }
         
