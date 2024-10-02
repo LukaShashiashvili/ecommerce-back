@@ -35,8 +35,11 @@ export class UsersRepository{
         
     }
     findAll(){
-        return 'All users found'
+        return this.usersRepository
+        .createQueryBuilder('users')
+        .getMany()
     }
+
     findByEmail(email: string){
        return this.usersRepository.findOne({
         where: {email: email},})
@@ -64,12 +67,29 @@ export class UsersRepository{
         await this.usersRepository.update(user.id, user);
     }
     findOne(id: number){
-        return 'User found'
+        return this.usersRepository
+        .createQueryBuilder('users')
+        .where('users.id = :id', {id})
+        .getMany()
     }
-    update(id: number, updateUserDto: UpdateUserDto){
-        return 'User updated'
+    async update(id: number, updateUserDto: UpdateUserDto){
+        await this.usersRepository
+        .createQueryBuilder('users')
+        .update()
+        .set(updateUserDto)
+        .where('users.id = :id', {id})
+        .execute()
+
+        return this.usersRepository.findOneBy({id})
     }
-    remove(id: number){
-        return 'User deleted'
+    
+    async remove(id: number){
+        await this.usersRepository.softDelete({id})
+
+        return this.usersRepository
+        .createQueryBuilder('users')
+        .withDeleted()
+        .where('users.id = :id', {id})
+        .getOne()
     }
 }
