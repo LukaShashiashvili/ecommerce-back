@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Repository } from "typeorm";
-import { Product } from "./entities/product.entity";
+import { ProductEntity } from "./entities/product.entity";
 import { CreateProductDto } from "./dto/create-product.dto";
 import { UpdateProductDto } from "./dto/update-product.dto";
 import { InjectRepository } from "@nestjs/typeorm";
@@ -8,22 +8,16 @@ import { InjectRepository } from "@nestjs/typeorm";
 @Injectable()
 export class ProductsRepository{
     constructor(
-        @InjectRepository(Product)
-        private readonly productsRepo: Repository<Product>
+        @InjectRepository(ProductEntity)
+        private readonly productsRepo: Repository<ProductEntity>
     ){}
 
     async create(data: CreateProductDto){
-        try{
+
             const newProd = this.productsRepo.create(data)
             
             await this.productsRepo.save(newProd);
             return newProd;
-        } catch(err){
-            if(err.errno == 1062){
-                return 'This product already exits'
-            }
-        }
-        
         
     }
 
@@ -40,7 +34,7 @@ export class ProductsRepository{
         .getMany()
     }
 
-    findOneByTitle(title: string){
+    findByName(title: string){
         return this.productsRepo
         .createQueryBuilder('product')
         .where('product.title Like :title', {title: `%${title}%`})

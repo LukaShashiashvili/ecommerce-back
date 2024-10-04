@@ -20,6 +20,15 @@ export class User {
     @Column({default: 0})
     numberOfAttempts: number;
 
+    @Column('simple-array')
+    wishlist: string[];
+
+    @Column('simple-array')
+    cart: string[];
+
+    @Column()
+    image:string;
+
     @CreateDateColumn()
     createdAt: Date;
 

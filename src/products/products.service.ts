@@ -20,8 +20,8 @@ export class ProductsService {
     return this.productsRepo.findOne(id);
   }
 
-  findOneByTitle(title: string){
-    return this.productsRepo.findOneByTitle(title);
+  findByName(title: string){
+    return this.productsRepo.findByName(title);
   }
 
   async update(id: number, data: UpdateProductDto) {
