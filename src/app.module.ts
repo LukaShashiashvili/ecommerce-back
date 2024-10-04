@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { CategoriesModule } from './categories/categories.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -17,7 +18,7 @@ import { CategoriesModule } from './categories/categories.module';
     database: 'ecommerce',
     autoLoadEntities: true,
     synchronize: true
-  }) , UsersModule, AuthModule, ProductsModule, CategoriesModule],
+  }) , UsersModule, AuthModule, ProductsModule, CategoriesModule, SearchModule],
   controllers: [AppController],
   providers: [AppService],
 })
