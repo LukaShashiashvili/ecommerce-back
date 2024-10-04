@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { CategoryEntity } from "src/categories/entities/category.entity";
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToMany, PrimaryColumn, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class ProductEntity {
@@ -11,8 +12,8 @@ export class ProductEntity {
     @Column()
     price: number;
 
-    @Column({type: 'varchar'})
-    category: string;
+    @ManyToMany(() => CategoryEntity, (categories: CategoryEntity) => categories.products, {cascade: true})
+    categories: CategoryEntity[];
 
     @Column()
     image: string;

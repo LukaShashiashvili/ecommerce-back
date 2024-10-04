@@ -70,7 +70,7 @@ export class UsersRepository{
         return this.usersRepository
         .createQueryBuilder('users')
         .where('users.id = :id', {id})
-        .getMany()
+        .getOne()
     }
     async update(id: number, updateUserDto: UpdateUserDto){
         await this.usersRepository

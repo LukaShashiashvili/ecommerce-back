@@ -26,7 +26,7 @@ export class CategoriesRepository{
     findOne(id: number){
         return this.categoriesRepo.createQueryBuilder('category')
         .where('category.id = :id', {id})
-        .getMany();
+        .getOne();
     }
 
     findByName(title: string){
